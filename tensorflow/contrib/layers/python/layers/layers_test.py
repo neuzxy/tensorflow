@@ -65,7 +65,7 @@ class AvgPool2DTest(test.TestCase):
     height, width = 3, 6
     images = np.random.uniform(size=(5, height, width, 3))
     output = _layers.avg_pool2d(images, [3, 3])
-    self.assertEqual(output.op.name, 'AvgPool2D/AvgPool')
+    self.assertEqual(output.op.name, 'AvgPool2D/AvgPoolV2')
     self.assertListEqual(output.get_shape().as_list(), [5, 1, 2, 3])
 
   def testCreateAvgPoolNCHW(self):
@@ -86,14 +86,14 @@ class AvgPool2DTest(test.TestCase):
     height, width = 3, 6
     images = random_ops.random_uniform((5, height, width, 3), seed=1)
     output = _layers.avg_pool2d(images, 3)
-    self.assertEqual(output.op.name, 'AvgPool2D/AvgPool')
+    self.assertEqual(output.op.name, 'AvgPool2D/AvgPoolV2')
     self.assertListEqual(output.get_shape().as_list(), [5, 1, 2, 3])
 
   def testCreateAvgPoolWithScope(self):
     height, width = 3, 6
     images = random_ops.random_uniform((5, height, width, 3), seed=1)
     output = _layers.avg_pool2d(images, [3, 3], scope='pool1')
-    self.assertEqual(output.op.name, 'pool1/AvgPool')
+    self.assertEqual(output.op.name, 'pool1/AvgPoolV2')
 
   def testCreateAvgPoolWithSamePadding(self):
     height, width = 3, 6
@@ -117,7 +117,7 @@ class AvgPool2DTest(test.TestCase):
   def testGlobalAvgPool(self):
     height, width = 3, 6
     images = random_ops.random_uniform((5, height, width, 3), seed=1)
-    output = _layers.avg_pool2d(images, images.get_shape()[1:3], stride=1)
+    output = _layers.avg_pool2d(images, images.get_shape().as_list()[1:3], stride=1)
     self.assertListEqual(output.get_shape().as_list(), [5, 1, 1, 3])
 
 
@@ -2835,7 +2835,7 @@ class MaxPool2DTest(test.TestCase):
     height, width = 3, 6
     images = np.random.uniform(size=(5, height, width, 3)).astype(np.float32)
     output = _layers.max_pool2d(images, [3, 3])
-    self.assertEqual(output.op.name, 'MaxPool2D/MaxPool')
+    self.assertEqual(output.op.name, 'MaxPool2D/MaxPoolV2')
     self.assertListEqual(output.get_shape().as_list(), [5, 1, 2, 3])
 
   def testCreateMaxPoolNCHW(self):
@@ -2856,14 +2856,14 @@ class MaxPool2DTest(test.TestCase):
     height, width = 3, 6
     images = random_ops.random_uniform((5, height, width, 3), seed=1)
     output = _layers.max_pool2d(images, 3)
-    self.assertEqual(output.op.name, 'MaxPool2D/MaxPool')
+    self.assertEqual(output.op.name, 'MaxPool2D/MaxPoolV2')
     self.assertListEqual(output.get_shape().as_list(), [5, 1, 2, 3])
 
   def testCreateMaxPoolWithScope(self):
     height, width = 3, 6
     images = random_ops.random_uniform((5, height, width, 3), seed=1)
     output = _layers.max_pool2d(images, [3, 3], scope='pool1')
-    self.assertEqual(output.op.name, 'pool1/MaxPool')
+    self.assertEqual(output.op.name, 'pool1/MaxPoolV2')
 
   def testCreateMaxPoolWithSamePadding(self):
     height, width = 3, 6
@@ -2887,7 +2887,7 @@ class MaxPool2DTest(test.TestCase):
   def testGlobalMaxPool(self):
     height, width = 3, 6
     images = random_ops.random_uniform((5, height, width, 3), seed=1)
-    output = _layers.max_pool2d(images, images.get_shape()[1:3], stride=1)
+    output = _layers.max_pool2d(images, images.get_shape().as_list()[1:3], stride=1)
     self.assertListEqual(output.get_shape().as_list(), [5, 1, 1, 3])
 
 

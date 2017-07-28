@@ -165,7 +165,7 @@ class PoolingTest(test.TestCase):
     height, width = 7, 9
     images = random_ops.random_uniform((5, height, width, 4), seed=1)
     layer = pooling_layers.MaxPooling2D(
-        images.get_shape()[1:3], strides=2, padding='same')
+        images.get_shape().as_list()[1:3], strides=2, padding='same')
     output = layer.apply(images)
     self.assertListEqual(output.get_shape().as_list(), [5, 4, 5, 4])
 

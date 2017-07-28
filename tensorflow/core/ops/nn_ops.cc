@@ -90,7 +90,6 @@ REGISTER_OP("AvgPool")
     .Attr(GetPaddingAttrString())
     .Attr(GetConvnetDataFormatAttrString())
     .Attr("T: {half, float, double}")
-    .Deprecated(23, "Use AvgPoolV2 instead")
     .SetShapeFn(shape_inference::AvgPoolV2Shape)
     .Doc(R"doc(
 Performs average pooling on the input.
@@ -1412,7 +1411,6 @@ REGISTER_OP("MaxPool")
     .Attr(GetConvnetDataFormatAttrString())
     .Input("input: T")
     .Output("output: T")
-    .Deprecated(23, "Use MaxPoolV2 instead")
     .SetShapeFn(shape_inference::MaxPoolV2Shape)
     .Doc(R"doc(
 Performs max pooling on the input.
